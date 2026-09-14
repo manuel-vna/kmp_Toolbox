@@ -1,0 +1,12 @@
+name: Toolbox pipeline
+
+on:
+  push:
+
+jobs:
+  detekt:
+    rubs-on: ubuntu-latest
+
+    steps:
+      - name: Running Detekt
+        run: ./gradlew detekt --no-daemon
