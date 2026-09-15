@@ -1,0 +1,7 @@
+[*.{kt,kts}]
+insert_final_newline = false
+ktlint_standard_final-newline = disabled
+ktlint_standard_trailing-comma-on-call-site = disabled
+ktlint_standard_trailing-comma-on-declaration-site = disabled
+ij_kotlin_allow_trailing_comma = false
+ij_kotlin_allow_trailing_comma_on_call_site = false
