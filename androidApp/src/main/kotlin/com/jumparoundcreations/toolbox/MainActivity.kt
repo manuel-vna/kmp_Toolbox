@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 
@@ -13,13 +14,18 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         setContent {
-            App()
+            GreetingText("Android")
         }
     }
+}
+
+@Composable
+fun GreetingText(name: String) {
+    Text(text = "Hello $name!")
 }
 
 @Preview
 @Composable
 fun AppAndroidPreview() {
-    App()
+    GreetingText("Android")
 }
