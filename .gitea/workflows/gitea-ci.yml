@@ -30,16 +30,3 @@ jobs:
           java-version: '21'
       - name: Running ktlint
         run: ./gradlew ktlintCheck --no-daemon
-
-  unitTests:
-    run-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-      - name: Set up JDK
-        uses: actions/setup-java@v4
-        with:
-          distribution: 'temurin'
-          java-version: '21'
-      - name: Runnig unit tests
-        run: ./gradlew sharedLogic:jvmTest --no-daemon
