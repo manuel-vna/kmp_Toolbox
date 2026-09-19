@@ -42,4 +42,4 @@ jobs:
           distribution: 'temurin'
           java-version: '21'
       - name: Runnig unit tests
-        run: ./gradlew testDebugUnitTest --no-daemon
+        run: ./gradlew sharedLogic:jvmTest --no-daemon
