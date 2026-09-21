@@ -26,4 +26,8 @@ class PaceCalculatorViewModel : ViewModel() {
         }
     }
 
+    fun onDispose() {
+        //ToDo
+    }
+
 }

@@ -7,8 +7,8 @@ import SwiftUI
 import SharedLogic
 
 struct PaceCalculatorRoot: View {
-    @State private var viewModel: PaceCalculatorViewModel
-    @State private var states: PaceCalculatorStates
+    @State private var viewModel = PaceCalculatorViewModel()
+    @State private var states = PaceCalculatorStates(distance: 0.0)
 
 
     var body: some View {
@@ -21,5 +21,8 @@ struct PaceCalculatorRoot: View {
                     states = newState
                 }
             }
+        .onDisappear {
+            viewModel.onDispose()
+        }
     }
 }
