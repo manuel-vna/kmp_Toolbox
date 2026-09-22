@@ -1,14 +1,15 @@
 package com.jumparoundcreations.toolbox.paceCalculator
 
 import androidx.lifecycle.ViewModel
+import com.jumparoundcreations.toolbox.di.dispose
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 
 class PaceCalculatorViewModel : ViewModel() {
 
-    val _paceCalulatorStates = MutableStateFlow(PaceCalculatorStates())
-    val paceCalculatorStates = _paceCalulatorStates.asStateFlow()
+    private val _paceCalculatorStates = MutableStateFlow(PaceCalculatorStates())
+    val paceCalculatorStates = _paceCalculatorStates.asStateFlow()
 
     fun onAction(action: PaceCalculatorIntents) {
         when (action) {
@@ -19,15 +20,19 @@ class PaceCalculatorViewModel : ViewModel() {
     }
 
     fun changeDistance(newDistance: Double) {
-        _paceCalulatorStates.update { current ->
+        _paceCalculatorStates.update { current ->
             current.copy(
-                distance = newDistance
+                distance = newDistance,
             )
         }
     }
 
     fun onDispose() {
-        //ToDo
+        this.dispose()
     }
 
+    override fun onCleared() {
+        super.onCleared()
+        println("PaceCalculatorViewModel onCleared")
+    }
 }
