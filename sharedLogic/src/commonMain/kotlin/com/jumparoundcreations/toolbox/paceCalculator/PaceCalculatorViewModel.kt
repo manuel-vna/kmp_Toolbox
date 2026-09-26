@@ -16,6 +16,25 @@ class PaceCalculatorViewModel : ViewModel() {
             is PaceCalculatorIntents.ChangeDistance -> {
                 changeDistance(action.newDistance)
             }
+            is PaceCalculatorIntents.ChangeTimeHour -> {
+                changeHour(action.newTimeHour)
+            }
+
+            is PaceCalculatorIntents.ChangeTimeMinute -> {
+                changeHour(action.newTimeMinute)
+            }
+
+            is PaceCalculatorIntents.ChangeTimeSecond -> {
+                changeHour(action.newTimeSecond)
+            }
+
+            is PaceCalculatorIntents.ChangePace -> {
+                changePace(action.newPace)
+            }
+
+            is PaceCalculatorIntents.ChangeSpeed -> {
+                changeSpeed(action.newSpeed)
+            }
         }
     }
 
@@ -23,6 +42,46 @@ class PaceCalculatorViewModel : ViewModel() {
         _paceCalculatorStates.update { current ->
             current.copy(
                 distance = newDistance,
+            )
+        }
+    }
+
+    fun changeHour(newHour: Double) {
+        _paceCalculatorStates.update { current ->
+            current.copy(
+                timeHour = newHour,
+            )
+        }
+    }
+
+    fun changeMinute(newMinute: Double) {
+        _paceCalculatorStates.update { current ->
+            current.copy(
+                timeHour = newMinute,
+            )
+        }
+    }
+
+    fun changeSecond(newSecond: Double) {
+        _paceCalculatorStates.update { current ->
+            current.copy(
+                timeSecond = newSecond,
+            )
+        }
+    }
+
+    fun changePace(newPace: Double) {
+        _paceCalculatorStates.update { current ->
+            current.copy(
+                pace = newPace,
+            )
+        }
+    }
+
+    fun changeSpeed(newSpeed: Double) {
+        _paceCalculatorStates.update { current ->
+            current.copy(
+                speed = newSpeed,
             )
         }
     }
