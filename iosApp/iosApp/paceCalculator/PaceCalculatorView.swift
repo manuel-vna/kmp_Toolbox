@@ -17,12 +17,11 @@ struct PaceCalculatorView: View {
                 ZStack(alignment: .topLeading) {
                     Grid(horizontalSpacing: 8, verticalSpacing: 12) {
                         GridRow {
-                            TextField("hh", text: Binding(
-                                get: { state.distance == 0 ? "" : String(state.distance) },
+                            TextField("km", text: Binding(
+                                get: { String(state.distanceKm) },
                                 set: { newValue in
-                                    if let newDistance = Double(newValue) {
-                                        onAction(PaceCalculatorIntents.ChangeDistance(newDistance: newDistance))
-                                    }
+                                    onAction(PaceCalculatorIntents.ChangeDistance(newDistance: newValue)
+                                    )
                                 }
                             ))
                             .multilineTextAlignment(.center)
@@ -45,11 +44,9 @@ struct PaceCalculatorView: View {
                     Grid(horizontalSpacing: 8, verticalSpacing: 12) {
                         GridRow {
                             TextField("hh", text: Binding(
-                                get: { state.distance == 0 ? "" : String(state.distance) },
+                                get: { String(state.timeHour) },
                                 set: { newValue in
-                                    if let newDistance = Double(newValue) {
-                                        onAction(PaceCalculatorIntents.ChangeDistance(newDistance: newDistance))
-                                    }
+                                    onAction(PaceCalculatorIntents.ChangeTimeHour(newTimeHour: newValue))
                                 }
                             ))
                             .multilineTextAlignment(.center)
@@ -58,11 +55,9 @@ struct PaceCalculatorView: View {
                         }
                         GridRow {
                             TextField("mm", text: Binding(
-                                get: { state.distance == 0 ? "" : String(state.distance) },
+                                get: { String(state.timeMinute) },
                                 set: { newValue in
-                                    if let newDistance = Double(newValue) {
-                                        onAction(PaceCalculatorIntents.ChangeDistance(newDistance: newDistance))
-                                    }
+                                    onAction(PaceCalculatorIntents.ChangeTimeMinute(newTimeMinute: newValue))
                                 }
                             ))
                             .multilineTextAlignment(.center)
@@ -71,11 +66,9 @@ struct PaceCalculatorView: View {
                         }
                         GridRow {
                             TextField("ss", text: Binding(
-                                get: { state.distance == 0 ? "" : String(state.distance) },
+                                get: { String(state.timeSecond) },
                                 set: { newValue in
-                                    if let newDistance = Double(newValue) {
-                                        onAction(PaceCalculatorIntents.ChangeDistance(newDistance: newDistance))
-                                    }
+                                    onAction(PaceCalculatorIntents.ChangeTimeSecond(newTimeSecond: newValue))
                                 }
                             ))
                             .multilineTextAlignment(.center)
@@ -98,12 +91,20 @@ struct PaceCalculatorView: View {
                 ZStack(alignment: .topLeading) {
                     Grid(horizontalSpacing: 8, verticalSpacing: 12) {
                         GridRow {
-                            TextField("hh", text: Binding(
-                                get: { state.pace == 0 ? "" : String(state.pace) },
+                            TextField("mm", text: Binding(
+                                get: { String(state.paceMinute) },
                                 set: { newValue in
-                                    if let newPace = Double(newValue) {
-                                        onAction(PaceCalculatorIntents.ChangePace(newPace: newPace))
-                                    }
+                                    onAction(PaceCalculatorIntents.ChangePaceMinute(newPaceMinute: newValue))
+                                }
+                            ))
+                            .multilineTextAlignment(.center)
+                            .frame(width: 80)
+                            .frame(maxWidth: .infinity, alignment: .center)
+
+                            TextField("ss", text: Binding(
+                                get: { String(state.paceSecond) },
+                                set: { newValue in
+                                    onAction(PaceCalculatorIntents.ChangePaceSecond(newPaceSecond: newValue))
                                 }
                             ))
                             .multilineTextAlignment(.center)
@@ -126,11 +127,9 @@ struct PaceCalculatorView: View {
                     Grid(horizontalSpacing: 8, verticalSpacing: 12) {
                         GridRow {
                             TextField("hh", text: Binding(
-                                get: { state.speed == 0 ? "" : String(state.speed) },
+                                get: { String(state.speedKmPerHour) },
                                 set: { newValue in
-                                    if let newSpeed = Double(newValue) {
-                                        onAction(PaceCalculatorIntents.ChangeSpeed(newSpeed: newSpeed))
-                                    }
+                                    onAction(PaceCalculatorIntents.ChangeSpeed(newSpeed: newValue))
                                 }
                             ))
                             .multilineTextAlignment(.center)
@@ -148,6 +147,45 @@ struct PaceCalculatorView: View {
                 }
             }
 
+            Section("Popular distances") {
+                ZStack(alignment: .topLeading) {
+                    Grid(horizontalSpacing: 8, verticalSpacing: 12) {
+                        GridRow {
+                            Text(state.popularFiveKm)
+                                .multilineTextAlignment(.center)
+                                .frame(width: 80)
+                                .frame(maxWidth: .infinity, alignment: .center)
+                                .foregroundStyle(.pink)
+                        }
+                        GridRow {
+                            Text(state.popularTenKm)
+                                .multilineTextAlignment(.center)
+                                .frame(width: 80)
+                                .frame(maxWidth: .infinity, alignment: .center)
+                                .foregroundStyle(.pink)
+                        }
+                        GridRow {
+                            Text("")
+                                .multilineTextAlignment(.center)
+                                .frame(width: 80)
+                                .frame(maxWidth: .infinity, alignment: .center)
+                                .foregroundStyle(.pink)
+                        }
+                    }
+                    .frame(maxWidth: .infinity, alignment: .center)
+
+                    VStack(alignment: .trailing, spacing: 12) {
+                        Text("5 km").foregroundStyle(.white).padding(.trailing, 12)
+                        Text("10 km").foregroundStyle(.white).padding(.trailing, 12)
+                        Text("21,097 km").foregroundStyle(.white).padding(.trailing, 12)
+                    }
+                    .frame(maxWidth: .infinity, alignment: .trailing)
+                }
+                .padding(.vertical, 4)
+                .background(RoundedRectangle(cornerRadius: 12).fill(Color.black.opacity(0.8)))
+                .clipShape(RoundedRectangle(cornerRadius: 12))
+            }
+
         }
     }
 }
@@ -157,15 +195,19 @@ struct PaceCalculatorView_Previews: PreviewProvider {
     static var previews: some View {
         PaceCalculatorView(
             state: PaceCalculatorStates(
-                distance: 1.0,
-                timeHour: 2.0,
-                timeMinute: 3.0,
-                timeSecond: 4.0,
-                timeTotalInMinutes: 5.0,
-                pace: 6.0,
-                speed: 7.0
+                distanceKm: "1",
+                timeHour: "2",
+                timeMinute: "3",
+                timeSecond: "4",
+                paceMinute: "6",
+                paceSecond: "7",
+                speedKmPerHour: "8",
+                popularOneKm: "9",
+                popularFiveKm: "10",
+                popularTenKm: "11"
             ),
             onAction: { _ in }
         )
     }
 }
+

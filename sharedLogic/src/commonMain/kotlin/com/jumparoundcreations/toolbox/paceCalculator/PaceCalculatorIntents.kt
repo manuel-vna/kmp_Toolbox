@@ -2,26 +2,30 @@ package com.jumparoundcreations.toolbox.paceCalculator
 
 sealed class PaceCalculatorIntents {
     data class ChangeDistance(
-        val newDistance: Double
+        val newDistance: String
     ) : PaceCalculatorIntents()
 
     data class ChangeTimeHour(
-        val newTimeHour: Double
+        val newTimeHour: String
     ) : PaceCalculatorIntents()
 
     data class ChangeTimeMinute(
-        val newTimeMinute: Double
+        val newTimeMinute: String
     ) : PaceCalculatorIntents()
 
     data class ChangeTimeSecond(
-        val newTimeSecond: Double
+        val newTimeSecond: String
     ) : PaceCalculatorIntents()
 
-    data class ChangePace(
-        val newPace: Double
+    data class ChangePaceMinute(
+        val newPaceMinute: String
+    ) : PaceCalculatorIntents()
+
+    data class ChangePaceSecond(
+        val newPaceSecond: String
     ) : PaceCalculatorIntents()
 
     data class ChangeSpeed(
-        val newSpeed: Double
+        val newSpeed: String
     ) : PaceCalculatorIntents()
 }
