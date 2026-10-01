@@ -27,6 +27,7 @@ struct PaceCalculatorView: View {
                             .multilineTextAlignment(.center)
                             .frame(width: 80)
                             .frame(maxWidth: .infinity, alignment: .center)
+                            .keyboardType(.numbersAndPunctuation)
                         }
                     }
                     .frame(maxWidth: .infinity, alignment: .center)
@@ -52,6 +53,7 @@ struct PaceCalculatorView: View {
                             .multilineTextAlignment(.center)
                             .frame(width: 80)
                             .frame(maxWidth: .infinity, alignment: .center)
+                            .keyboardType(.decimalPad)
                         }
                         GridRow {
                             TextField("mm", text: Binding(
@@ -63,6 +65,7 @@ struct PaceCalculatorView: View {
                             .multilineTextAlignment(.center)
                             .frame(width: 80)
                             .frame(maxWidth: .infinity, alignment: .center)
+                            .keyboardType(.decimalPad)
                         }
                         GridRow {
                             TextField("ss", text: Binding(
@@ -74,6 +77,7 @@ struct PaceCalculatorView: View {
                             .multilineTextAlignment(.center)
                             .frame(width: 80)
                             .frame(maxWidth: .infinity, alignment: .center)
+                            .keyboardType(.decimalPad)
                         }
                     }
                     .frame(maxWidth: .infinity, alignment: .center)
@@ -100,6 +104,7 @@ struct PaceCalculatorView: View {
                             .multilineTextAlignment(.center)
                             .frame(width: 80)
                             .frame(maxWidth: .infinity, alignment: .center)
+                            .keyboardType(.decimalPad)
 
                             TextField("ss", text: Binding(
                                 get: { String(state.paceSecond) },
@@ -110,6 +115,7 @@ struct PaceCalculatorView: View {
                             .multilineTextAlignment(.center)
                             .frame(width: 80)
                             .frame(maxWidth: .infinity, alignment: .center)
+                            .keyboardType(.decimalPad)
                         }
                     }
                     .frame(maxWidth: .infinity, alignment: .center)
@@ -135,6 +141,7 @@ struct PaceCalculatorView: View {
                             .multilineTextAlignment(.center)
                             .frame(width: 80)
                             .frame(maxWidth: .infinity, alignment: .center)
+                            .keyboardType(.decimalPad)
                         }
                     }
                     .frame(maxWidth: .infinity, alignment: .center)
@@ -165,7 +172,7 @@ struct PaceCalculatorView: View {
                                 .foregroundStyle(.pink)
                         }
                         GridRow {
-                            Text("")
+                            Text(state.popularTwentyOneKm)
                                 .multilineTextAlignment(.center)
                                 .frame(width: 80)
                                 .frame(maxWidth: .infinity, alignment: .center)
@@ -204,7 +211,8 @@ struct PaceCalculatorView_Previews: PreviewProvider {
                 speedKmPerHour: "8",
                 popularOneKm: "9",
                 popularFiveKm: "10",
-                popularTenKm: "11"
+                popularTenKm: "11",
+                popularTwentyOneKm: "12"
             ),
             onAction: { _ in }
         )

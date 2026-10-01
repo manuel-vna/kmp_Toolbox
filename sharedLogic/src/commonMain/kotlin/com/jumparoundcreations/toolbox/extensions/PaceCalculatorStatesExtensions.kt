@@ -1,7 +1,6 @@
 package com.jumparoundcreations.toolbox.extensions
 
 import com.jumparoundcreations.toolbox.paceCalculator.PaceCalculatorStates
-
 import kotlin.math.roundToLong
 
 
@@ -27,23 +26,60 @@ fun PaceCalculatorStates.calculateFromDistanceAndTime(): PaceCalculatorStates {
         )
 }
 
-private fun PaceCalculatorStates.withPopularDistances(timeSeconds: Long?): PaceCalculatorStates {
+fun PaceCalculatorStates.calculateFromPace(): PaceCalculatorStates {
+    val distance = distanceKm.positiveDoubleOrNull()
+    val paceSeconds = paceSecondsOrNull()
 
-    val timeSecondsFiveTimes = timeSeconds?.times(5)
-    val minutesFiveKm = (timeSecondsFiveTimes?.div(60))?.toInt()
-    val secondsFiveLeft = minutesFiveKm?.times(60) ?: 0
-    val secondsFiveKm = (timeSecondsFiveTimes?.toInt()?.minus(secondsFiveLeft))
+    if (distance == null || paceSeconds == null || paceSeconds == 0L) {
+        return clearCalculatedTimeAndSpeed()
+    }
 
-    val timeSecondsTenTimes = timeSeconds?.times(10)
-    val minutesTenKm = (timeSecondsTenTimes?.div(60))?.toInt()
-    val secondsTenLeft = minutesTenKm?.times(60) ?: 0
-    val secondsTenKm = (timeSecondsTenTimes?.toInt()?.minus(secondsTenLeft))
+    val calculatedTime = distance * paceSeconds
+    if (!calculatedTime.isFinite() ||
+        calculatedTime < 1.0 ||
+        calculatedTime > Long.MAX_VALUE.toDouble()
+    ) {
+        return clearCalculatedTimeAndSpeed()
+    }
+
+    return withCalculatedTime(calculatedTime.roundToLong()).copy(
+        speedKmPerHour = (3600.0 / paceSeconds).displayDecimal()
+    )
+}
+
+internal fun PaceCalculatorStates.withPopularDistances(timeSeconds: Long?): PaceCalculatorStates {
+    if (timeSeconds == null || timeSeconds <= 0) {
+        return copy(
+            popularOneKm = "",
+            popularFiveKm = "",
+            popularTenKm = "",
+            popularTwentyOneKm = ""
+        )
+    }
+
+    val timeFiveKm = timeSeconds * 5
+    val timeTenKm = timeSeconds * 10
+    val timeTwentyOneKm = (timeSeconds * 21.097).roundToLong()
 
     return copy(
-        popularFiveKm = "$minutesFiveKm:$secondsFiveKm",
-        popularTenKm = "$minutesTenKm:$secondsTenKm",
+        popularOneKm = formatToTimeString(timeSeconds),
+        popularFiveKm = formatToTimeString(timeFiveKm),
+        popularTenKm = formatToTimeString(timeTenKm),
+        popularTwentyOneKm = formatToTimeString(timeTwentyOneKm)
     )
+}
 
+internal fun formatToTimeString(totalSeconds: Long?): String {
+    if (totalSeconds == null || totalSeconds <= 0) return ""
+    val hours = totalSeconds / 3600
+    val minutes = (totalSeconds % 3600) / 60
+    val seconds = totalSeconds % 60
+
+    return if (hours > 0) {
+        "$hours:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}"
+    } else {
+        "$minutes:${seconds.toString().padStart(2, '0')}"
+    }
 }
 
 private fun PaceCalculatorStates.timeSecondsOrNull(): Long? {
@@ -70,4 +106,20 @@ private fun PaceCalculatorStates.withCalculatedTime(seconds: Long): PaceCalculat
         timeHour = (seconds / 3600).toString(),
         timeMinute = ((seconds % 3600) / 60).toString().padStart(2, '0'),
         timeSecond = (seconds % 60).toString().padStart(2, '0')
+    )
+
+private fun PaceCalculatorStates.paceSecondsOrNull(): Long? {
+    val minutes = paceMinute.nonNegativeLongOrNull() ?: return null
+    val seconds = paceSecond.nonNegativeLongOrNull() ?: return null
+
+    if (seconds > 59 || minutes > Long.MAX_VALUE / 60) return null
+    return minutes * 60 + seconds
+}
+
+private fun PaceCalculatorStates.clearCalculatedTimeAndSpeed(): PaceCalculatorStates =
+    copy(
+        timeHour = "",
+        timeMinute = "",
+        timeSecond = "",
+        speedKmPerHour = ""
     )

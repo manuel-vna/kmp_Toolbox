@@ -18,7 +18,8 @@ struct PaceCalculatorRoot: View {
         speedKmPerHour: "",
         popularOneKm: "",
         popularFiveKm: "",
-        popularTenKm: ""
+        popularTenKm: "",
+        popularTwentyOneKm: ""
     )
 
 

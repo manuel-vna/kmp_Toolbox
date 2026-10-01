@@ -11,4 +11,5 @@ data class PaceCalculatorStates(
     val popularOneKm: String = "",
     val popularFiveKm: String = "",
     val popularTenKm: String = "",
+    val popularTwentyOneKm: String = "",
 )

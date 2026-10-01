@@ -3,6 +3,7 @@ package com.jumparoundcreations.toolbox.paceCalculator
 import androidx.lifecycle.ViewModel
 import com.jumparoundcreations.toolbox.di.dispose
 import com.jumparoundcreations.toolbox.extensions.calculateFromDistanceAndTime
+import com.jumparoundcreations.toolbox.extensions.calculateFromPace
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
@@ -55,7 +56,7 @@ class PaceCalculatorViewModel : ViewModel() {
         _paceCalculatorStates.update { current ->
             current.copy(
                 timeHour = newHour,
-            )
+            ).calculateFromDistanceAndTime()
         }
     }
 
@@ -63,7 +64,7 @@ class PaceCalculatorViewModel : ViewModel() {
         _paceCalculatorStates.update { current ->
             current.copy(
                 timeMinute = newMinute,
-            )
+            ).calculateFromDistanceAndTime()
         }
     }
 
@@ -71,7 +72,7 @@ class PaceCalculatorViewModel : ViewModel() {
         _paceCalculatorStates.update { current ->
             current.copy(
                 timeSecond = newSecond
-            )
+            ).calculateFromDistanceAndTime()
         }
     }
 
@@ -79,7 +80,7 @@ class PaceCalculatorViewModel : ViewModel() {
         _paceCalculatorStates.update { current ->
             current.copy(
                 paceMinute = newPaceMinute,
-            )
+            ).calculateFromPace()
         }
     }
 
@@ -87,7 +88,7 @@ class PaceCalculatorViewModel : ViewModel() {
         _paceCalculatorStates.update { current ->
             current.copy(
                 paceSecond = newPaceSecond
-            )
+            ).calculateFromPace()
         }
     }
 
