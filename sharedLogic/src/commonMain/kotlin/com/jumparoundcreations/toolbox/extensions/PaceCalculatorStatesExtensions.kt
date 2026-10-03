@@ -3,7 +3,6 @@ package com.jumparoundcreations.toolbox.extensions
 import com.jumparoundcreations.toolbox.paceCalculator.PaceCalculatorStates
 import kotlin.math.roundToLong
 
-
 fun PaceCalculatorStates.calculateFromDistanceAndTime(): PaceCalculatorStates {
     val distance = distanceKm.positiveDoubleOrNull()
     val timeSeconds = timeSecondsOrNull()
@@ -43,9 +42,10 @@ fun PaceCalculatorStates.calculateFromPace(): PaceCalculatorStates {
     }
 
     return withPopularDistances(paceSeconds)
-        .withCalculatedTime(calculatedTime.roundToLong()).copy(
-        speedKmPerHour = (3600.0 / paceSeconds).displayDecimal()
-    )
+        .withCalculatedTime(calculatedTime.roundToLong())
+        .copy(
+            speedKmPerHour = (3600.0 / paceSeconds).displayDecimal()
+        )
 }
 
 fun PaceCalculatorStates.calculateFromSpeed(): PaceCalculatorStates {

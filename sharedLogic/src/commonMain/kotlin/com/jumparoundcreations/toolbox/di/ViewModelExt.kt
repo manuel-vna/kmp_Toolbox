@@ -14,15 +14,18 @@ import kotlin.reflect.KClass
  */
 fun ViewModel.dispose() {
     val store = ViewModelStore()
-    val provider = ViewModelProvider.create(
-        store = store,
-        factory = object : ViewModelProvider.Factory {
-            @Suppress("UNCHECKED_CAST")
-            override fun <T : ViewModel> create(modelClass: KClass<T>, extras: CreationExtras): T {
-                return this@dispose as T
-            }
-        }
-    )
+    val provider =
+        ViewModelProvider.create(
+            store = store,
+            factory =
+                object : ViewModelProvider.Factory {
+                    @Suppress("UNCHECKED_CAST")
+                    override fun <T : ViewModel> create(
+                        modelClass: KClass<T>,
+                        extras: CreationExtras
+                    ): T = this@dispose as T
+                }
+        )
 
     // Using the actual class of this instance to ensure the provider can "find" it in the factory.
     provider.get(this::class)

@@ -1,6 +1,5 @@
 package com.jumparoundcreations.toolbox.extensions
 
-
 fun String.positiveDoubleOrNull(): Double? =
     trim().toDoubleOrNull()?.takeIf { it.isFinite() && it > 0.0 }
 

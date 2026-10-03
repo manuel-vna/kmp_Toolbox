@@ -5,7 +5,6 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 
 class PaceCalculatorStatesExtensionsTest {
-
     @Test
     fun testFormatToTimeString_nullAndNegative() {
         assertEquals("", formatToTimeString(null))

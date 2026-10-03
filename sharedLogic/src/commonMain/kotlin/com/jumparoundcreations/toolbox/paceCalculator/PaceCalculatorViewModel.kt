@@ -9,9 +9,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 
-
 class PaceCalculatorViewModel : ViewModel() {
-
     private val _paceCalculatorStates = MutableStateFlow(PaceCalculatorStates())
     val paceCalculatorStates = _paceCalculatorStates.asStateFlow()
 
@@ -48,57 +46,64 @@ class PaceCalculatorViewModel : ViewModel() {
 
     fun changeDistance(newDistance: String) {
         _paceCalculatorStates.update { current ->
-            current.copy(
-                distanceKm = newDistance,
-            ).calculateFromDistanceAndTime()
+            current
+                .copy(
+                    distanceKm = newDistance,
+                ).calculateFromDistanceAndTime()
         }
     }
 
     fun changeHour(newHour: String) {
         _paceCalculatorStates.update { current ->
-            current.copy(
-                timeHour = newHour,
-            ).calculateFromDistanceAndTime()
+            current
+                .copy(
+                    timeHour = newHour,
+                ).calculateFromDistanceAndTime()
         }
     }
 
     fun changeMinute(newMinute: String) {
         _paceCalculatorStates.update { current ->
-            current.copy(
-                timeMinute = newMinute,
-            ).calculateFromDistanceAndTime()
+            current
+                .copy(
+                    timeMinute = newMinute,
+                ).calculateFromDistanceAndTime()
         }
     }
 
     fun changeSecond(newSecond: String) {
         _paceCalculatorStates.update { current ->
-            current.copy(
-                timeSecond = newSecond
-            ).calculateFromDistanceAndTime()
+            current
+                .copy(
+                    timeSecond = newSecond
+                ).calculateFromDistanceAndTime()
         }
     }
 
     fun changePaceMinute(newPaceMinute: String) {
         _paceCalculatorStates.update { current ->
-            current.copy(
-                paceMinute = newPaceMinute,
-            ).calculateFromPace()
+            current
+                .copy(
+                    paceMinute = newPaceMinute,
+                ).calculateFromPace()
         }
     }
 
     fun changePaceSecond(newPaceSecond: String) {
         _paceCalculatorStates.update { current ->
-            current.copy(
-                paceSecond = newPaceSecond
-            ).calculateFromPace()
+            current
+                .copy(
+                    paceSecond = newPaceSecond
+                ).calculateFromPace()
         }
     }
 
     fun changeSpeed(newSpeed: String) {
         _paceCalculatorStates.update { current ->
-            current.copy(
-                speedKmPerHour = newSpeed,
-            ).calculateFromSpeed()
+            current
+                .copy(
+                    speedKmPerHour = newSpeed,
+                ).calculateFromSpeed()
         }
     }
 
@@ -110,5 +115,4 @@ class PaceCalculatorViewModel : ViewModel() {
         super.onCleared()
         println("PaceCalculatorViewModel onCleared")
     }
-
 }
