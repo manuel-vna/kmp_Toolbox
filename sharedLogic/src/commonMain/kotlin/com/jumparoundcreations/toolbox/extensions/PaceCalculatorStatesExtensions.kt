@@ -42,9 +42,35 @@ fun PaceCalculatorStates.calculateFromPace(): PaceCalculatorStates {
         return clearCalculatedTimeAndSpeed()
     }
 
-    return withCalculatedTime(calculatedTime.roundToLong()).copy(
+    return withPopularDistances(paceSeconds)
+        .withCalculatedTime(calculatedTime.roundToLong()).copy(
         speedKmPerHour = (3600.0 / paceSeconds).displayDecimal()
     )
+}
+
+fun PaceCalculatorStates.calculateFromSpeed(): PaceCalculatorStates {
+    val distance = distanceKm.positiveDoubleOrNull()
+    val speed = speedKmPerHour.positiveDoubleOrNull()
+
+    if (distance == null || speed == null) {
+        return clearCalculatedTimeAndPace()
+    }
+
+    val calculatedTime = distance * 3600.0 / speed
+    val calculatedPace = 3600.0 / speed
+
+    if (!calculatedTime.isFinite() ||
+        calculatedTime < 1.0 ||
+        calculatedTime > Long.MAX_VALUE.toDouble() ||
+        !calculatedPace.isFinite() ||
+        calculatedPace < 1.0 ||
+        calculatedPace > Long.MAX_VALUE.toDouble()
+    ) {
+        return clearCalculatedTimeAndPace()
+    }
+
+    return withCalculatedTime(calculatedTime.roundToLong())
+        .withCalculatedPace(calculatedPace.roundToLong())
 }
 
 internal fun PaceCalculatorStates.withPopularDistances(timeSeconds: Long?): PaceCalculatorStates {
@@ -122,4 +148,13 @@ private fun PaceCalculatorStates.clearCalculatedTimeAndSpeed(): PaceCalculatorSt
         timeMinute = "",
         timeSecond = "",
         speedKmPerHour = ""
+    )
+
+private fun PaceCalculatorStates.clearCalculatedTimeAndPace(): PaceCalculatorStates =
+    copy(
+        timeHour = "",
+        timeMinute = "",
+        timeSecond = "",
+        paceMinute = "",
+        paceSecond = ""
     )

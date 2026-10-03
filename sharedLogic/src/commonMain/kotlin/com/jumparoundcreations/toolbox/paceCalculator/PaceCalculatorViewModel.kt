@@ -4,9 +4,11 @@ import androidx.lifecycle.ViewModel
 import com.jumparoundcreations.toolbox.di.dispose
 import com.jumparoundcreations.toolbox.extensions.calculateFromDistanceAndTime
 import com.jumparoundcreations.toolbox.extensions.calculateFromPace
+import com.jumparoundcreations.toolbox.extensions.calculateFromSpeed
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
+
 
 class PaceCalculatorViewModel : ViewModel() {
 
@@ -96,7 +98,7 @@ class PaceCalculatorViewModel : ViewModel() {
         _paceCalculatorStates.update { current ->
             current.copy(
                 speedKmPerHour = newSpeed,
-            )
+            ).calculateFromSpeed()
         }
     }
 
