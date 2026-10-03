@@ -9,7 +9,7 @@ import SharedLogic
 struct PaceCalculatorRoot: View {
     @State private var viewModel = PaceCalculatorViewModel()
     @State private var states = PaceCalculatorStates(
-        distanceKm: "",
+        distanceKm: "10",
         timeHour: "",
         timeMinute: "",
         timeSecond: "",

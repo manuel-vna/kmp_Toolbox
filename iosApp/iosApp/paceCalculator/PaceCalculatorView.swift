@@ -10,6 +10,8 @@ struct PaceCalculatorView: View {
     let state: PaceCalculatorStates
     let onAction: (PaceCalculatorIntents) -> Void
 
+    @FocusState private var isInputFocused: Bool
+
     var body: some View {
         Form {
 
@@ -20,14 +22,14 @@ struct PaceCalculatorView: View {
                             TextField("km", text: Binding(
                                 get: { String(state.distanceKm) },
                                 set: { newValue in
-                                    onAction(PaceCalculatorIntents.ChangeDistance(newDistance: newValue)
-                                    )
+                                    onAction(PaceCalculatorIntents.ChangeDistance(newDistance: newValue))
                                 }
                             ))
                             .multilineTextAlignment(.center)
                             .frame(width: 80)
                             .frame(maxWidth: .infinity, alignment: .center)
                             .keyboardType(.numbersAndPunctuation)
+                            .focused($isInputFocused)
                         }
                     }
                     .frame(maxWidth: .infinity, alignment: .center)
@@ -54,6 +56,7 @@ struct PaceCalculatorView: View {
                             .frame(width: 80)
                             .frame(maxWidth: .infinity, alignment: .center)
                             .keyboardType(.decimalPad)
+                            .focused($isInputFocused)
                         }
                         GridRow {
                             TextField("mm", text: Binding(
@@ -66,6 +69,7 @@ struct PaceCalculatorView: View {
                             .frame(width: 80)
                             .frame(maxWidth: .infinity, alignment: .center)
                             .keyboardType(.decimalPad)
+                            .focused($isInputFocused)
                         }
                         GridRow {
                             TextField("ss", text: Binding(
@@ -78,6 +82,7 @@ struct PaceCalculatorView: View {
                             .frame(width: 80)
                             .frame(maxWidth: .infinity, alignment: .center)
                             .keyboardType(.decimalPad)
+                            .focused($isInputFocused)
                         }
                     }
                     .frame(maxWidth: .infinity, alignment: .center)
@@ -105,6 +110,7 @@ struct PaceCalculatorView: View {
                             .frame(width: 80)
                             .frame(maxWidth: .infinity, alignment: .center)
                             .keyboardType(.decimalPad)
+                            .focused($isInputFocused)
 
                             TextField("ss", text: Binding(
                                 get: { String(state.paceSecond) },
@@ -116,6 +122,7 @@ struct PaceCalculatorView: View {
                             .frame(width: 80)
                             .frame(maxWidth: .infinity, alignment: .center)
                             .keyboardType(.decimalPad)
+                            .focused($isInputFocused)
                         }
                     }
                     .frame(maxWidth: .infinity, alignment: .center)
@@ -142,6 +149,7 @@ struct PaceCalculatorView: View {
                             .frame(width: 80)
                             .frame(maxWidth: .infinity, alignment: .center)
                             .keyboardType(.decimalPad)
+                            .focused($isInputFocused)
                         }
                     }
                     .frame(maxWidth: .infinity, alignment: .center)
@@ -194,6 +202,15 @@ struct PaceCalculatorView: View {
             }
 
         }
+        .scrollDismissesKeyboard(.interactively)
+        .toolbar {
+            ToolbarItemGroup(placement: .keyboard) {
+                Spacer()
+                Button("Done") {
+                    isInputFocused = false
+                }
+            }
+        }
     }
 }
 
@@ -218,4 +235,3 @@ struct PaceCalculatorView_Previews: PreviewProvider {
         )
     }
 }
-

@@ -1,7 +1,7 @@
 package com.jumparoundcreations.toolbox.paceCalculator
 
 data class PaceCalculatorStates(
-    val distanceKm: String = "",
+    val distanceKm: String = "10",
     val timeHour: String = "",
     val timeMinute: String = "",
     val timeSecond: String = "",
