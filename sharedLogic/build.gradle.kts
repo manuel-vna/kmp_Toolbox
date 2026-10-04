@@ -48,6 +48,7 @@ kotlin {
         commonMain.dependencies {
             api(libs.koin.core)
             implementation(libs.androidx.lifecycle.viewmodel)
+            implementation(libs.serialization)
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)

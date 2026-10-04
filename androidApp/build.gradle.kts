@@ -14,6 +14,7 @@ dependencies {
     implementation(project(":sharedLogic"))
 
     implementation(libs.androidx.activity.compose)
+    implementation(libs.androidx.navigation3.ui)
     implementation(libs.compose.material3)
     implementation(libs.compose.uiToolingPreview)
     implementation(libs.koin.android)

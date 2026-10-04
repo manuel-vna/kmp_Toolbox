@@ -4,9 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.tooling.preview.Preview
+import com.jumparoundcreations.toolbox.navigation.Navigation
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -14,18 +12,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         setContent {
-            GreetingText("Android")
+            Navigation()
         }
     }
-}
-
-@Composable
-fun GreetingText(name: String) {
-    Text(text = "Hello $name!")
-}
-
-@Preview
-@Composable
-fun AppAndroidPreview() {
-    GreetingText("Android")
 }
