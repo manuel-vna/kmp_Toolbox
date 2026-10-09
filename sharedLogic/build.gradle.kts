@@ -47,6 +47,7 @@ kotlin {
 
         commonMain.dependencies {
             api(libs.koin.core)
+            api(libs.koin.core.viewmodel)
             implementation(libs.androidx.lifecycle.viewmodel)
             implementation(libs.serialization)
         }

@@ -19,7 +19,9 @@ fun Navigation() {
         entryProvider =
             entryProvider {
                 entry<Routes.Dashboard> {
-                    DashboardScreen()
+                    DashboardScreen(
+                        onPaceCalculatorNavigation = { backStack.add(Routes.PaceCalculator) }
+                    )
                 }
                 entry<Routes.PaceCalculator> {
                     PaceCalculatorScreen()

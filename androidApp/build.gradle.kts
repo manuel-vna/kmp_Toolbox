@@ -13,6 +13,10 @@ kotlin {
 dependencies {
     implementation(project(":sharedLogic"))
 
+    // the method platform() is used below because BOM is an XML metadata file that contains
+    // a list of library artifacts. It is not a standard library.
+    implementation(platform(libs.androidx.compose.bom))
+    implementation(libs.androidx.compose.icons)
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.navigation3.ui)
     implementation(libs.compose.material3)
@@ -21,7 +25,6 @@ dependencies {
     implementation(libs.koin.androidx.compose)
 
     debugImplementation(libs.compose.uiTooling)
-
 }
 
 android {
