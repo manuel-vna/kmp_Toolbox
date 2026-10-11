@@ -12,7 +12,7 @@ struct Navigation: View {
                     case .dashboard:
                         Dashboard()
                     case .paceCalculator:
-                        PaceCalculatorRoot()
+                        RunningRoot()
                     case .unknown:
                         Unknown()
                     }

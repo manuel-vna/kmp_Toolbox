@@ -6,9 +6,9 @@ import Foundation
 import SharedLogic
 import SwiftUI
 
-struct PaceCalculatorView: View {
-    let state: PaceCalculatorStates
-    let onAction: (PaceCalculatorIntents) -> Void
+struct RunningView: View {
+    let state: RunningStates
+    let onAction: (RunningIntents) -> Void
 
     @FocusState private var isInputFocused: Bool
 
@@ -20,9 +20,9 @@ struct PaceCalculatorView: View {
                     Grid(horizontalSpacing: 8, verticalSpacing: 12) {
                         GridRow {
                             TextField("km", text: Binding(
-                                get: { String(state.distanceKm) },
+                                get: { String(state.distance) },
                                 set: { newValue in
-                                    onAction(PaceCalculatorIntents.ChangeDistance(newDistance: newValue))
+                                    onAction(RunningIntents.ChangeDistance(newDistance: newValue))
                                 }
                             ))
                             .multilineTextAlignment(.center)
@@ -47,9 +47,9 @@ struct PaceCalculatorView: View {
                     Grid(horizontalSpacing: 8, verticalSpacing: 12) {
                         GridRow {
                             TextField("hh", text: Binding(
-                                get: { String(state.timeHour) },
+                                get: { String(state.time.hour) },
                                 set: { newValue in
-                                    onAction(PaceCalculatorIntents.ChangeTimeHour(newTimeHour: newValue))
+                                    onAction(RunningIntents.ChangeTimeHour(newTimeHour: newValue))
                                 }
                             ))
                             .multilineTextAlignment(.center)
@@ -60,9 +60,9 @@ struct PaceCalculatorView: View {
                         }
                         GridRow {
                             TextField("mm", text: Binding(
-                                get: { String(state.timeMinute) },
+                                get: { state.time.minute },
                                 set: { newValue in
-                                    onAction(PaceCalculatorIntents.ChangeTimeMinute(newTimeMinute: newValue))
+                                    onAction(RunningIntents.ChangeTimeMinute(newTimeMinute: newValue))
                                 }
                             ))
                             .multilineTextAlignment(.center)
@@ -73,9 +73,9 @@ struct PaceCalculatorView: View {
                         }
                         GridRow {
                             TextField("ss", text: Binding(
-                                get: { String(state.timeSecond) },
+                                get: { String(state.time.second) },
                                 set: { newValue in
-                                    onAction(PaceCalculatorIntents.ChangeTimeSecond(newTimeSecond: newValue))
+                                    onAction(RunningIntents.ChangeTimeSecond(newTimeSecond: newValue))
                                 }
                             ))
                             .multilineTextAlignment(.center)
@@ -101,9 +101,9 @@ struct PaceCalculatorView: View {
                     Grid(horizontalSpacing: 8, verticalSpacing: 12) {
                         GridRow {
                             TextField("mm", text: Binding(
-                                get: { String(state.paceMinute) },
+                                get: { String(state.pace.minute) },
                                 set: { newValue in
-                                    onAction(PaceCalculatorIntents.ChangePaceMinute(newPaceMinute: newValue))
+                                    onAction(RunningIntents.ChangePaceMinute(newPaceMinute: newValue))
                                 }
                             ))
                             .multilineTextAlignment(.center)
@@ -113,9 +113,9 @@ struct PaceCalculatorView: View {
                             .focused($isInputFocused)
 
                             TextField("ss", text: Binding(
-                                get: { String(state.paceSecond) },
+                                get: { String(state.pace.second) },
                                 set: { newValue in
-                                    onAction(PaceCalculatorIntents.ChangePaceSecond(newPaceSecond: newValue))
+                                    onAction(RunningIntents.ChangePaceSecond(newPaceSecond: newValue))
                                 }
                             ))
                             .multilineTextAlignment(.center)
@@ -140,9 +140,9 @@ struct PaceCalculatorView: View {
                     Grid(horizontalSpacing: 8, verticalSpacing: 12) {
                         GridRow {
                             TextField("hh", text: Binding(
-                                get: { String(state.speedKmPerHour) },
+                                get: { String(state.speed) },
                                 set: { newValue in
-                                    onAction(PaceCalculatorIntents.ChangeSpeed(newSpeed: newValue))
+                                    onAction(RunningIntents.ChangeSpeed(newSpeed: newValue))
                                 }
                             ))
                             .multilineTextAlignment(.center)
@@ -166,21 +166,35 @@ struct PaceCalculatorView: View {
                 ZStack(alignment: .topLeading) {
                     Grid(horizontalSpacing: 8, verticalSpacing: 12) {
                         GridRow {
-                            Text(state.popularFiveKm)
+                            Text(state.popularDistances.nullPointFourKm)
                                 .multilineTextAlignment(.center)
                                 .frame(width: 80)
                                 .frame(maxWidth: .infinity, alignment: .center)
                                 .foregroundStyle(.pink)
                         }
                         GridRow {
-                            Text(state.popularTenKm)
+                            Text(state.popularDistances.oneKm)
                                 .multilineTextAlignment(.center)
                                 .frame(width: 80)
                                 .frame(maxWidth: .infinity, alignment: .center)
                                 .foregroundStyle(.pink)
                         }
                         GridRow {
-                            Text(state.popularTwentyOneKm)
+                            Text(state.popularDistances.fiveKm)
+                                .multilineTextAlignment(.center)
+                                .frame(width: 80)
+                                .frame(maxWidth: .infinity, alignment: .center)
+                                .foregroundStyle(.pink)
+                        }
+                        GridRow {
+                            Text(state.popularDistances.tenKm)
+                                .multilineTextAlignment(.center)
+                                .frame(width: 80)
+                                .frame(maxWidth: .infinity, alignment: .center)
+                                .foregroundStyle(.pink)
+                        }
+                        GridRow {
+                            Text(state.popularDistances.twentyOneKm)
                                 .multilineTextAlignment(.center)
                                 .frame(width: 80)
                                 .frame(maxWidth: .infinity, alignment: .center)
@@ -190,6 +204,8 @@ struct PaceCalculatorView: View {
                     .frame(maxWidth: .infinity, alignment: .center)
 
                     VStack(alignment: .trailing, spacing: 12) {
+                        Text("0.4 km").foregroundStyle(.white).padding(.trailing, 12)
+                        Text("1 km").foregroundStyle(.white).padding(.trailing, 12)
                         Text("5 km").foregroundStyle(.white).padding(.trailing, 12)
                         Text("10 km").foregroundStyle(.white).padding(.trailing, 12)
                         Text("21,097 km").foregroundStyle(.white).padding(.trailing, 12)
@@ -217,19 +233,26 @@ struct PaceCalculatorView: View {
 
 struct PaceCalculatorView_Previews: PreviewProvider {
     static var previews: some View {
-        PaceCalculatorView(
-            state: PaceCalculatorStates(
-                distanceKm: "1",
-                timeHour: "2",
-                timeMinute: "3",
-                timeSecond: "4",
-                paceMinute: "6",
-                paceSecond: "7",
-                speedKmPerHour: "8",
-                popularOneKm: "9",
-                popularFiveKm: "10",
-                popularTenKm: "11",
-                popularTwentyOneKm: "12"
+        RunningView(
+            state: RunningStates(
+                distance: "1",
+                time: Time(
+                    hour: "2",
+                    minute: "3",
+                    second: "4"
+                ),
+                pace: Pace(
+                    minute: "5",
+                    second: "6"
+                ),
+                speed: "7",
+                popularDistances: PopularDistances(
+                    nullPointFourKm: "8",
+                    oneKm: "9",
+                    fiveKm: "10",
+                    tenKm: "11",
+                    twentyOneKm: "12"
+                )
             ),
             onAction: { _ in }
         )
