@@ -6,7 +6,7 @@ import androidx.compose.runtime.remember
 import androidx.navigation3.runtime.entryProvider
 import androidx.navigation3.ui.NavDisplay
 import com.jumparoundcreations.toolbox.dashboard.DashboardScreen
-import com.jumparoundcreations.toolbox.paceCalculator.PaceCalculatorScreen
+import com.jumparoundcreations.toolbox.running.RunningScreen
 
 @Composable
 fun Navigation() {
@@ -24,7 +24,7 @@ fun Navigation() {
                     )
                 }
                 entry<Routes.PaceCalculator> {
-                    PaceCalculatorScreen()
+                    RunningScreen()
                 }
             }
     )
