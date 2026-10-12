@@ -3,9 +3,11 @@ package com.jumparoundcreations.toolbox.running
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Cancel
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -13,7 +15,10 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
@@ -23,11 +28,22 @@ fun RunningScreen(
     val states by viewModel.runningStates.collectAsState()
 
     Column(
-        modifier = Modifier.fillMaxSize(),
-        verticalArrangement = Arrangement.Center,
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(8.dp),
+        verticalArrangement = Arrangement.spacedBy(2.dp, Alignment.CenterVertically),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
+        Text(
+            modifier = Modifier.padding(bottom = 32.dp),
+            text = "Running Times Calculator",
+            style = MaterialTheme.typography.headlineSmall,
+            fontWeight = FontWeight.Bold,
+            textAlign = TextAlign.Center
+        )
+
         OutlinedTextField(
+            modifier = Modifier.padding(bottom = 24.dp),
             label = { Text("Distance") },
             value = states.distance,
             onValueChange = { newValue ->
@@ -85,6 +101,7 @@ fun RunningScreen(
         )
 
         OutlinedTextField(
+            modifier = Modifier.padding(bottom = 24.dp),
             label = { Text("Time Second") },
             value = states.time.second,
             onValueChange = { newValue ->
@@ -123,6 +140,7 @@ fun RunningScreen(
         )
 
         OutlinedTextField(
+            modifier = Modifier.padding(bottom = 24.dp),
             label = { Text("Pace Second") },
             value = states.pace.second,
             onValueChange = { newValue ->
@@ -142,6 +160,7 @@ fun RunningScreen(
         )
 
         OutlinedTextField(
+            modifier = Modifier.padding(bottom = 24.dp),
             label = { Text("Speed") },
             value = states.speed,
             onValueChange = { newValue ->

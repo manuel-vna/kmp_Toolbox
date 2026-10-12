@@ -110,7 +110,7 @@ internal fun RunningStates.withPopularDistances(timeSeconds: Long?): RunningStat
     )
 }
 
-internal fun formatToTimeString2(totalSeconds: Long?): String {
+internal fun formatToTimeString(totalSeconds: Long?): String {
     if (totalSeconds == null || totalSeconds <= 0) return ""
     val hours = totalSeconds / 3600
     val minutes = (totalSeconds % 3600) / 60
