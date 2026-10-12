@@ -19,17 +19,14 @@ struct RunningView: View {
                 ZStack(alignment: .topLeading) {
                     Grid(horizontalSpacing: 8, verticalSpacing: 12) {
                         GridRow {
-                            TextField("km", text: Binding(
-                                get: { String(state.distance) },
-                                set: { newValue in
-                                    onAction(RunningIntents.ChangeDistance(newDistance: newValue))
-                                }
-                            ))
-                            .multilineTextAlignment(.center)
-                            .frame(width: 80)
-                            .frame(maxWidth: .infinity, alignment: .center)
-                            .keyboardType(.numbersAndPunctuation)
-                            .focused($isInputFocused)
+                            FilteredTextField(
+                                title: "km",
+                                value: state.distance,
+                                keyboardType: .numbersAndPunctuation,
+                                isFocused: $isInputFocused,
+                                isValid: { $0.distanceAndSpeedFilter() },
+                                propagateAction: { onAction(RunningIntents.ChangeDistance(newDistance: $0)) }
+                            )
                         }
                     }
                     .frame(maxWidth: .infinity, alignment: .center)
@@ -46,43 +43,34 @@ struct RunningView: View {
                 ZStack(alignment: .topLeading) {
                     Grid(horizontalSpacing: 8, verticalSpacing: 12) {
                         GridRow {
-                            TextField("hh", text: Binding(
-                                get: { String(state.time.hour) },
-                                set: { newValue in
-                                    onAction(RunningIntents.ChangeTimeHour(newTimeHour: newValue))
-                                }
-                            ))
-                            .multilineTextAlignment(.center)
-                            .frame(width: 80)
-                            .frame(maxWidth: .infinity, alignment: .center)
-                            .keyboardType(.decimalPad)
-                            .focused($isInputFocused)
+                            FilteredTextField(
+                                title: "hh",
+                                value: state.time.hour,
+                                keyboardType: .decimalPad,
+                                isFocused: $isInputFocused,
+                                isValid: { $0.hourInputFilter() },
+                                propagateAction: { onAction(RunningIntents.ChangeTimeHour(newTimeHour: $0)) }
+                            )
                         }
                         GridRow {
-                            TextField("mm", text: Binding(
-                                get: { state.time.minute },
-                                set: { newValue in
-                                    onAction(RunningIntents.ChangeTimeMinute(newTimeMinute: newValue))
-                                }
-                            ))
-                            .multilineTextAlignment(.center)
-                            .frame(width: 80)
-                            .frame(maxWidth: .infinity, alignment: .center)
-                            .keyboardType(.decimalPad)
-                            .focused($isInputFocused)
+                            FilteredTextField(
+                                title: "mm",
+                                value: state.time.minute,
+                                keyboardType: .decimalPad,
+                                isFocused: $isInputFocused,
+                                isValid: { $0.minuteSecondInputFilter() },
+                                propagateAction: { onAction(RunningIntents.ChangeTimeMinute(newTimeMinute: $0)) }
+                            )
                         }
                         GridRow {
-                            TextField("ss", text: Binding(
-                                get: { String(state.time.second) },
-                                set: { newValue in
-                                    onAction(RunningIntents.ChangeTimeSecond(newTimeSecond: newValue))
-                                }
-                            ))
-                            .multilineTextAlignment(.center)
-                            .frame(width: 80)
-                            .frame(maxWidth: .infinity, alignment: .center)
-                            .keyboardType(.decimalPad)
-                            .focused($isInputFocused)
+                            FilteredTextField(
+                                title: "ss",
+                                value: state.time.second,
+                                keyboardType: .decimalPad,
+                                isFocused: $isInputFocused,
+                                isValid: { $0.minuteSecondInputFilter() },
+                                propagateAction: { onAction(RunningIntents.ChangeTimeSecond(newTimeSecond: $0)) }
+                            )
                         }
                     }
                     .frame(maxWidth: .infinity, alignment: .center)
@@ -100,29 +88,23 @@ struct RunningView: View {
                 ZStack(alignment: .topLeading) {
                     Grid(horizontalSpacing: 8, verticalSpacing: 12) {
                         GridRow {
-                            TextField("mm", text: Binding(
-                                get: { String(state.pace.minute) },
-                                set: { newValue in
-                                    onAction(RunningIntents.ChangePaceMinute(newPaceMinute: newValue))
-                                }
-                            ))
-                            .multilineTextAlignment(.center)
-                            .frame(width: 80)
-                            .frame(maxWidth: .infinity, alignment: .center)
-                            .keyboardType(.decimalPad)
-                            .focused($isInputFocused)
+                            FilteredTextField(
+                                title: "mm",
+                                value: state.pace.minute,
+                                keyboardType: .decimalPad,
+                                isFocused: $isInputFocused,
+                                isValid: { $0.minuteSecondInputFilter() },
+                                propagateAction: { onAction(RunningIntents.ChangePaceMinute(newPaceMinute: $0)) }
+                            )
 
-                            TextField("ss", text: Binding(
-                                get: { String(state.pace.second) },
-                                set: { newValue in
-                                    onAction(RunningIntents.ChangePaceSecond(newPaceSecond: newValue))
-                                }
-                            ))
-                            .multilineTextAlignment(.center)
-                            .frame(width: 80)
-                            .frame(maxWidth: .infinity, alignment: .center)
-                            .keyboardType(.decimalPad)
-                            .focused($isInputFocused)
+                            FilteredTextField(
+                                title: "ss",
+                                value: state.pace.second,
+                                keyboardType: .decimalPad,
+                                isFocused: $isInputFocused,
+                                isValid: { $0.minuteSecondInputFilter() },
+                                propagateAction: { onAction(RunningIntents.ChangePaceSecond(newPaceSecond: $0)) }
+                            )
                         }
                     }
                     .frame(maxWidth: .infinity, alignment: .center)
@@ -139,17 +121,14 @@ struct RunningView: View {
                 ZStack(alignment: .topLeading) {
                     Grid(horizontalSpacing: 8, verticalSpacing: 12) {
                         GridRow {
-                            TextField("hh", text: Binding(
-                                get: { String(state.speed) },
-                                set: { newValue in
-                                    onAction(RunningIntents.ChangeSpeed(newSpeed: newValue))
-                                }
-                            ))
-                            .multilineTextAlignment(.center)
-                            .frame(width: 80)
-                            .frame(maxWidth: .infinity, alignment: .center)
-                            .keyboardType(.decimalPad)
-                            .focused($isInputFocused)
+                            FilteredTextField(
+                                title: "hh",
+                                value: state.speed,
+                                keyboardType: .decimalPad,
+                                isFocused: $isInputFocused,
+                                isValid: { $0.distanceAndSpeedFilter() },
+                                propagateAction: { onAction(RunningIntents.ChangeSpeed(newSpeed: $0)) }
+                            )
                         }
                     }
                     .frame(maxWidth: .infinity, alignment: .center)

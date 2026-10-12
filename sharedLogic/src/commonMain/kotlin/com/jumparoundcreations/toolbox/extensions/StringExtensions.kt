@@ -36,7 +36,7 @@ fun String.hourInputFilter(): Boolean {
  */
 fun String.minuteSecondInputFilter(): Boolean {
     if (isEmpty()) return true
-    val pattern = "^([1-9]|[1-5][0-9])\$"
+    val pattern = "^([0-9]|[0-5][0-9])\$"
     return matches(Regex(pattern))
 }
 
