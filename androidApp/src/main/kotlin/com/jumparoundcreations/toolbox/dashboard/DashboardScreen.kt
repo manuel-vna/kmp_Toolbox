@@ -26,7 +26,7 @@ fun DashboardScreen(
                 onPaceCalculatorNavigation()
             }
         ) {
-            Text("Pace Calculator")
+            Text("Running Time Calculator")
         }
     }
 }

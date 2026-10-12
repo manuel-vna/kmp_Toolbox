@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Cancel
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
@@ -36,7 +37,7 @@ fun RunningScreen(
     ) {
         Text(
             modifier = Modifier.padding(bottom = 32.dp),
-            text = "Running Times Calculator",
+            text = "Running Time Calculator",
             style = MaterialTheme.typography.headlineSmall,
             fontWeight = FontWeight.Bold,
             textAlign = TextAlign.Center
@@ -55,10 +56,13 @@ fun RunningScreen(
             },
             suffix = { Text("km") },
             trailingIcon = {
-                Icon(
-                    imageVector = Icons.Outlined.Cancel,
-                    contentDescription = "Clear distance"
-                )
+                CustomTrailingIcon {
+                    viewModel.onAction(
+                        RunningIntents.ChangeDistance(
+                            newDistance = ""
+                        )
+                    )
+                }
             }
         )
 
@@ -74,10 +78,13 @@ fun RunningScreen(
             },
             suffix = { Text("h") },
             trailingIcon = {
-                Icon(
-                    imageVector = Icons.Outlined.Cancel,
-                    contentDescription = "Clear hour"
-                )
+                CustomTrailingIcon {
+                    viewModel.onAction(
+                        RunningIntents.ChangeTimeHour(
+                            newTimeHour = ""
+                        )
+                    )
+                }
             }
         )
 
@@ -93,10 +100,13 @@ fun RunningScreen(
             },
             suffix = { Text("m") },
             trailingIcon = {
-                Icon(
-                    imageVector = Icons.Outlined.Cancel,
-                    contentDescription = "Clear minute"
-                )
+                CustomTrailingIcon {
+                    viewModel.onAction(
+                        RunningIntents.ChangeTimeMinute(
+                            newTimeMinute = ""
+                        )
+                    )
+                }
             }
         )
 
@@ -113,10 +123,13 @@ fun RunningScreen(
             },
             suffix = { Text("s") },
             trailingIcon = {
-                Icon(
-                    imageVector = Icons.Outlined.Cancel,
-                    contentDescription = "Clear second"
-                )
+                CustomTrailingIcon {
+                    viewModel.onAction(
+                        RunningIntents.ChangeTimeSecond(
+                            newTimeSecond = ""
+                        )
+                    )
+                }
             }
         )
 
@@ -132,10 +145,13 @@ fun RunningScreen(
             },
             suffix = { Text("m") },
             trailingIcon = {
-                Icon(
-                    imageVector = Icons.Outlined.Cancel,
-                    contentDescription = "Clear pace minute"
-                )
+                CustomTrailingIcon {
+                    viewModel.onAction(
+                        RunningIntents.ChangePaceMinute(
+                            newPaceMinute = ""
+                        )
+                    )
+                }
             }
         )
 
@@ -152,10 +168,13 @@ fun RunningScreen(
             },
             suffix = { Text("s") },
             trailingIcon = {
-                Icon(
-                    imageVector = Icons.Outlined.Cancel,
-                    contentDescription = "Clear pace second"
-                )
+                CustomTrailingIcon {
+                    viewModel.onAction(
+                        RunningIntents.ChangePaceSecond(
+                            newPaceSecond = ""
+                        )
+                    )
+                }
             }
         )
 
@@ -172,13 +191,26 @@ fun RunningScreen(
             },
             suffix = { Text("km/h") },
             trailingIcon = {
-                Icon(
-                    imageVector = Icons.Outlined.Cancel,
-                    contentDescription = "Clear speed"
-                )
+                CustomTrailingIcon {
+                    viewModel.onAction(
+                        RunningIntents.ChangeSpeed(
+                            newSpeed = ""
+                        )
+                    )
+                }
             }
         )
 
+    }
+}
+
+@Composable
+fun CustomTrailingIcon(onAction: () -> Unit) {
+    IconButton(onClick = { onAction() }) {
+        Icon(
+            imageVector = Icons.Outlined.Cancel,
+            contentDescription = "Clear speed",
+        )
     }
 }
 
