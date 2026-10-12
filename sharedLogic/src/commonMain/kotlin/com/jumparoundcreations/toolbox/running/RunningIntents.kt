@@ -1,7 +1,6 @@
 package com.jumparoundcreations.toolbox.running
 
 sealed class RunningIntents {
-
     data class ChangeDistance(
         val newDistance: String
     ) : RunningIntents()

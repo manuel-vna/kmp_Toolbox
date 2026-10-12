@@ -52,9 +52,10 @@ class RunningViewModel : ViewModel() {
     fun changeDistance(newDistance: String) {
         if (newDistance.distanceAndSpeedFilter()) {
             _runningStates.update { current ->
-                current.copy(
-                    distance = newDistance.replace(",", ".")
-                ).calculateFromDistanceAndTime()
+                current
+                    .copy(
+                        distance = newDistance.replace(",", ".")
+                    ).calculateFromDistanceAndTime()
             }
         }
     }
@@ -62,9 +63,10 @@ class RunningViewModel : ViewModel() {
     fun changeTimeHour(newHour: String) {
         if (newHour.hourInputFilter()) {
             _runningStates.update { current ->
-                current.copy(
-                    time = current.time.copy(hour = newHour)
-                ).calculateFromDistanceAndTime()
+                current
+                    .copy(
+                        time = current.time.copy(hour = newHour)
+                    ).calculateFromDistanceAndTime()
             }
         }
     }
@@ -72,9 +74,10 @@ class RunningViewModel : ViewModel() {
     fun changeTimeMinute(newMinute: String) {
         if (newMinute.minuteSecondInputFilter()) {
             _runningStates.update { current ->
-                current.copy(
-                    time = current.time.copy(minute = newMinute)
-                ).calculateFromDistanceAndTime()
+                current
+                    .copy(
+                        time = current.time.copy(minute = newMinute)
+                    ).calculateFromDistanceAndTime()
             }
         }
     }
@@ -82,9 +85,10 @@ class RunningViewModel : ViewModel() {
     fun changeTimeSecond(newSecond: String) {
         if (newSecond.minuteSecondInputFilter()) {
             _runningStates.update { current ->
-                current.copy(
-                    time = current.time.copy(second = newSecond)
-                ).calculateFromDistanceAndTime()
+                current
+                    .copy(
+                        time = current.time.copy(second = newSecond)
+                    ).calculateFromDistanceAndTime()
             }
         }
     }
@@ -92,9 +96,10 @@ class RunningViewModel : ViewModel() {
     fun changePaceMinute(newPaceMinute: String) {
         if (newPaceMinute.minuteSecondInputFilter()) {
             _runningStates.update { current ->
-                current.copy(
-                    pace = current.pace.copy(minute = newPaceMinute)
-                ).calculateFromPace()
+                current
+                    .copy(
+                        pace = current.pace.copy(minute = newPaceMinute)
+                    ).calculateFromPace()
             }
         }
     }
@@ -102,9 +107,10 @@ class RunningViewModel : ViewModel() {
     fun changePaceSecond(newPaceSecond: String) {
         if (newPaceSecond.minuteSecondInputFilter()) {
             _runningStates.update { current ->
-                current.copy(
-                    pace = current.pace.copy(second = newPaceSecond)
-                ).calculateFromPace()
+                current
+                    .copy(
+                        pace = current.pace.copy(second = newPaceSecond)
+                    ).calculateFromPace()
             }
         }
     }
@@ -112,9 +118,10 @@ class RunningViewModel : ViewModel() {
     fun changeSpeed(newSpeed: String) {
         if (newSpeed.distanceAndSpeedFilter()) {
             _runningStates.update { current ->
-                current.copy(
-                    speed = newSpeed.replace(",", ".")
-                ).calculateFromSpeed()
+                current
+                    .copy(
+                        speed = newSpeed.replace(",", ".")
+                    ).calculateFromSpeed()
             }
         }
     }

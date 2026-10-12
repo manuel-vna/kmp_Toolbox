@@ -82,13 +82,14 @@ fun RunningStates.calculateFromSpeed(): RunningStates {
 internal fun RunningStates.withPopularDistances(timeSeconds: Long?): RunningStates {
     if (timeSeconds == null || timeSeconds <= 0) {
         return copy(
-            popularDistances = popularDistances.copy(
-                nullPointFourKm = "",
-                oneKm = "",
-                fiveKm = "",
-                tenKm = "",
-                twentyOneKm = ""
-            ),
+            popularDistances =
+                popularDistances.copy(
+                    nullPointFourKm = "",
+                    oneKm = "",
+                    fiveKm = "",
+                    tenKm = "",
+                    twentyOneKm = ""
+                ),
         )
     }
 
@@ -98,15 +99,15 @@ internal fun RunningStates.withPopularDistances(timeSeconds: Long?): RunningStat
     val timeTwentyOneKm = (timeSeconds * 21.097).roundToLong()
 
     return copy(
-        popularDistances = popularDistances.copy(
-            nullPointFourKm = formatToTimeString(timeNullPointFourKm),
-            oneKm = formatToTimeString(timeSeconds),
-            fiveKm = formatToTimeString(timeFiveKm),
-            tenKm = formatToTimeString(timeTenKm),
-            twentyOneKm = formatToTimeString(timeTwentyOneKm)
-        ),
+        popularDistances =
+            popularDistances.copy(
+                nullPointFourKm = formatToTimeString(timeNullPointFourKm),
+                oneKm = formatToTimeString(timeSeconds),
+                fiveKm = formatToTimeString(timeFiveKm),
+                tenKm = formatToTimeString(timeTenKm),
+                twentyOneKm = formatToTimeString(timeTwentyOneKm)
+            ),
     )
-
 }
 
 internal fun formatToTimeString2(totalSeconds: Long?): String {
@@ -137,19 +138,21 @@ private fun RunningStates.timeSecondsOrNull(): Long? {
 
 private fun RunningStates.withCalculatedPace(secondsPerKm: Long): RunningStates =
     copy(
-        pace = pace.copy(
-            minute = (secondsPerKm / 60).toString(),
-            second = (secondsPerKm % 60).toString().padStart(2, '0')
-        )
+        pace =
+            pace.copy(
+                minute = (secondsPerKm / 60).toString(),
+                second = (secondsPerKm % 60).toString().padStart(2, '0')
+            )
     )
 
 private fun RunningStates.withCalculatedTime(seconds: Long): RunningStates =
     copy(
-        time = time.copy(
-            hour = (seconds / 3600).toString(),
-            minute = ((seconds % 3600) / 60).toString().padStart(2, '0'),
-            second = (seconds % 60).toString().padStart(2, '0')
-        )
+        time =
+            time.copy(
+                hour = (seconds / 3600).toString(),
+                minute = ((seconds % 3600) / 60).toString().padStart(2, '0'),
+                second = (seconds % 60).toString().padStart(2, '0')
+            )
     )
 
 private fun RunningStates.paceSecondsOrNull(): Long? {
@@ -162,23 +165,26 @@ private fun RunningStates.paceSecondsOrNull(): Long? {
 
 private fun RunningStates.clearCalculatedTimeAndSpeed(): RunningStates =
     copy(
-        time = time.copy(
-            hour = "",
-            minute = "",
-            second = ""
-        ),
+        time =
+            time.copy(
+                hour = "",
+                minute = "",
+                second = ""
+            ),
         speed = ""
     )
 
 private fun RunningStates.clearCalculatedTimeAndPace(): RunningStates =
     copy(
-        time = time.copy(
-            hour = "",
-            minute = "",
-            second = ""
-        ),
-        pace = pace.copy(
-            minute = "",
-            second = ""
-        )
+        time =
+            time.copy(
+                hour = "",
+                minute = "",
+                second = ""
+            ),
+        pace =
+            pace.copy(
+                minute = "",
+                second = ""
+            )
     )

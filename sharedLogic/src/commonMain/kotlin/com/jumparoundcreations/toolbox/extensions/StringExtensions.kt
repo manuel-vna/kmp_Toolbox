@@ -39,4 +39,3 @@ fun String.minuteSecondInputFilter(): Boolean {
     val pattern = "^([0-9]|[0-5][0-9])\$"
     return matches(Regex(pattern))
 }
-
