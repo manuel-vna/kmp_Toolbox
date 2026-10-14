@@ -10,7 +10,10 @@ import SwiftUI
 struct Dashboard: View {
     var body: some View {
         VStack(spacing: 16) {
-            NavigationLink("Pace Calculator", value: AppRoute.paceCalculator)
+            NavigationLink("Running Time Calculator", value: AppRoute.runningCalculator)
+                .buttonStyle(.borderedProminent)
+
+            NavigationLink("Document Scanner", value: AppRoute.documentScanner)
                 .buttonStyle(.borderedProminent)
 
             NavigationLink("Unknown", value: AppRoute.unknown)

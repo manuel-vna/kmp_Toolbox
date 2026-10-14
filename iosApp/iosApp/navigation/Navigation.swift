@@ -11,8 +11,10 @@ struct Navigation: View {
                     switch route {
                     case .dashboard:
                         Dashboard()
-                    case .paceCalculator:
+                    case .runningCalculator:
                         RunningRoot()
+                    case .documentScanner:
+                        DocumentScanner()
                     case .unknown:
                         Unknown()
                     }

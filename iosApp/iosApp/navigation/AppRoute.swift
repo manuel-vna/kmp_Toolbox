@@ -6,7 +6,8 @@ import Foundation
 
 enum AppRoute: Hashable, Identifiable {
     case dashboard
-    case paceCalculator
+    case runningCalculator
+    case documentScanner
     case unknown
 
     var id: Self {
