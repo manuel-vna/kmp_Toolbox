@@ -7,17 +7,11 @@ import SwiftUI
 import VisionKit
 
 struct DocumentScanner: View {
-    @State private var scannedImages: [UIImage] = []
-    @State private var isShowingScanner = false
-    @State private var errorMessage: String? = nil
-
-    private var isScannerSupported: Bool {
-        VNDocumentCameraViewController.isSupported
-    }
+    @StateObject private var viewModel = DocumentScannerViewModel()
 
     var body: some View {
         VStack(spacing: 20) {
-            if !isScannerSupported {
+            if !viewModel.state.isScannerSupported {
                 VStack(spacing: 12) {
                     Image(systemName: "camera.badge.ellipsis")
                         .font(.system(size: 48))
@@ -36,7 +30,7 @@ struct DocumentScanner: View {
                 .background(RoundedRectangle(cornerRadius: 16).fill(Color(uiColor: .systemGroupedBackground)))
             } else {
                 Button(action: {
-                    isShowingScanner = true
+                    viewModel.startScanning()
                 }) {
                     Label("Scan Document", systemImage: "doc.viewfinder")
                         .font(.headline)
@@ -46,28 +40,28 @@ struct DocumentScanner: View {
                 .buttonStyle(.borderedProminent)
             }
 
-            if let error = errorMessage {
+            if let error = viewModel.state.errorMessage {
                 Text(error)
                     .font(.footnote)
                     .foregroundStyle(.red)
             }
 
-            if !scannedImages.isEmpty {
+            if !viewModel.state.scannedImages.isEmpty {
                 HStack {
-                    Text("Scanned Pages (\(scannedImages.count))")
+                    Text("Scanned Pages (\(viewModel.state.scannedImages.count))")
                         .font(.headline)
 
                     Spacer()
 
                     Button("Clear All", role: .destructive) {
-                        scannedImages.removeAll()
+                        viewModel.clearAllScans()
                     }
                     .font(.subheadline)
                 }
 
                 ScrollView(.vertical, showsIndicators: true) {
                     LazyVGrid(columns: [GridItem(.adaptive(minimum: 140), spacing: 16)], spacing: 16) {
-                        ForEach(Array(scannedImages.enumerated()), id: \.offset) { index, image in
+                        ForEach(Array(viewModel.state.scannedImages.enumerated()), id: \.offset) { index, image in
                             VStack(spacing: 8) {
                                 Image(uiImage: image)
                                     .resizable()
@@ -85,7 +79,7 @@ struct DocumentScanner: View {
                         }
                     }
                 }
-            } else if isScannerSupported {
+            } else if viewModel.state.isScannerSupported {
                 Spacer()
                 VStack(spacing: 8) {
                     Image(systemName: "doc.text.viewfinder")
@@ -100,18 +94,16 @@ struct DocumentScanner: View {
         }
         .padding()
         .navigationTitle("Document Scanner")
-        .sheet(isPresented: $isShowingScanner) {
+        .sheet(isPresented: $viewModel.state.isShowingScanner) {
             DocumentCameraView(
                 onFinish: { images in
-                    self.isShowingScanner = false
-                    self.scannedImages.append(contentsOf: images)
+                    viewModel.finishScanning(with: images)
                 },
                 onCancel: {
-                    self.isShowingScanner = false
+                    viewModel.cancelScanning()
                 },
                 onError: { error in
-                    self.isShowingScanner = false
-                    self.errorMessage = "Scanner error: \(error.localizedDescription)"
+                    viewModel.failScanning(with: error)
                 }
             )
         }
