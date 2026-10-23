@@ -7,6 +7,7 @@
 
 import Foundation
 import SwiftUI
+import VisionKit
 
 struct DocumentScannerState {
     var scannedImages: [UIImage] = []
@@ -19,6 +20,6 @@ struct DocumentScannerState {
     var isShowingDocumentPicker: Bool = false
 
     var isScannerSupported: Bool {
-        //isDocumentScannerSupported()
+        VNDocumentCameraViewController.isSupported
     }
 }

@@ -28,12 +28,7 @@ final class DocumentScannerViewModel: ObservableObject {
             toggleSelection(for: index)
         case .generatePDF:
             _ = generatePDFFromSelectedImages()
-            state.isShowingExportOptions = true
         }
-    }
-
-    func isDocumentScannerSupported() -> Bool {
-        VNDocumentCameraViewController.isSupported
     }
 
     func startScanning() {
@@ -74,6 +69,7 @@ final class DocumentScannerViewModel: ObservableObject {
     }
 
     func generatePDFFromSelectedImages() -> URL? {
+        state.isShowingExportOptions = true
         let selectedImages = state.selectedIndices.sorted().compactMap { index -> UIImage? in
             guard index < state.scannedImages.count else {
                 return nil
