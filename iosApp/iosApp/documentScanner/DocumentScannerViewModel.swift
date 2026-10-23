@@ -6,25 +6,35 @@ import Foundation
 import SwiftUI
 import VisionKit
 
-struct DocumentScannerState {
-    var scannedImages: [UIImage] = []
-    var selectedIndices: Set<Int> = []
-    var isShowingScanner: Bool = false
-    var errorMessage: String? = nil
-    var isShowingExportOptions: Bool = false
-    var generatedPDFURL: URL? = nil
-    var isShowingShareSheet: Bool = false
-    var isShowingDocumentPicker: Bool = false
-
-    var isScannerSupported: Bool {
-        VNDocumentCameraViewController.isSupported
-    }
-}
 
 @MainActor
 final class DocumentScannerViewModel: ObservableObject {
     @Published var state = DocumentScannerState()
     private let generatePDFUseCase = GeneratePDFUseCase()
+
+    func onIntent(_ intent: DocumentScannerIntent) {
+        switch intent {
+        case .startScanning:
+            startScanning()
+        case .finishScanning(let images):
+            finishScanning(with: images)
+        case .cancelScanning:
+            cancelScanning()
+        case .failScanning(let error):
+            failScanning(with: error)
+        case .clearAllScans:
+            clearAllScans()
+        case .toggleSelection(let index):
+            toggleSelection(for: index)
+        case .generatePDF:
+            _ = generatePDFFromSelectedImages()
+            state.isShowingExportOptions = true
+        }
+    }
+
+    func isDocumentScannerSupported() -> Bool {
+        VNDocumentCameraViewController.isSupported
+    }
 
     func startScanning() {
         state.errorMessage = nil

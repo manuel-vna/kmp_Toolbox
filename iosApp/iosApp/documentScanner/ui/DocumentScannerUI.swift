@@ -30,14 +30,14 @@ struct DocumentScanner: View {
                 .background(RoundedRectangle(cornerRadius: 16).fill(Color(uiColor: .systemGroupedBackground)))
             } else {
                 Button(action: {
-                    viewModel.startScanning()
+                    viewModel.onIntent(.startScanning)
                 }) {
                     Label("Scan Document", systemImage: "doc.viewfinder")
                         .font(.headline)
                         .padding()
-                        .frame(maxWidth: .infinity)
                 }
                 .buttonStyle(.borderedProminent)
+                .padding(.vertical, 16)
             }
 
             if let error = viewModel.state.errorMessage {
@@ -54,7 +54,7 @@ struct DocumentScanner: View {
                     Spacer()
 
                     Button("Clear All", role: .destructive) {
-                        viewModel.clearAllScans()
+                        viewModel.onIntent(.clearAllScans)
                     }
                     .font(.subheadline)
                 }
@@ -80,7 +80,7 @@ struct DocumentScanner: View {
                                     }
                                 }
                                 .onTapGesture {
-                                    viewModel.toggleSelection(for: index)
+                                    viewModel.onIntent(.toggleSelection(index: index))
                                 }
 
                                 Text("Page \(index + 1)")
@@ -95,8 +95,7 @@ struct DocumentScanner: View {
 
                 if !viewModel.state.selectedIndices.isEmpty {
                     Button(action: {
-                        _ = viewModel.generatePDFFromSelectedImages()
-                        viewModel.state.isShowingExportOptions = true
+                        viewModel.onIntent(.generatePDF)
                     }) {
                         Label("Save as PDF (\(viewModel.state.selectedIndices.count) selected)", systemImage: "doc.badge.arrow.down")
                             .font(.headline)
@@ -124,17 +123,17 @@ struct DocumentScanner: View {
         .sheet(isPresented: $viewModel.state.isShowingScanner) {
             DocumentCameraView(
                 onFinish: { images in
-                    viewModel.finishScanning(with: images)
+                    viewModel.onIntent(.finishScanning(images: images))
                 },
                 onCancel: {
-                    viewModel.cancelScanning()
+                    viewModel.onIntent(.cancelScanning)
                 },
                 onError: { error in
-                    viewModel.failScanning(with: error)
+                    viewModel.onIntent(.failScanning(error: error))
                 }
             )
         }
-        .confirmationDialog("Export PDF", isPresented: $viewModel.state.isShowingExportOptions, titleVisibility: .visible) {
+        .confirmationDialog("", isPresented: $viewModel.state.isShowingExportOptions, titleVisibility: .visible) {
             Button("Share") {
                 viewModel.state.isShowingShareSheet = true
             }
@@ -144,7 +143,7 @@ struct DocumentScanner: View {
             Button("Cancel", role: .cancel) {
             }
         } message: {
-            Text("Where to save?")
+            Text("Export the selected documents by")
         }
         .sheet(isPresented: $viewModel.state.isShowingShareSheet) {
             if let url = viewModel.state.generatedPDFURL {
