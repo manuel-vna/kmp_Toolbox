@@ -23,6 +23,7 @@ dependencies {
     implementation(libs.compose.uiToolingPreview)
     implementation(libs.koin.android)
     implementation(libs.koin.androidx.compose)
+    implementation(libs.mlkit.document.scanner)
 
     debugImplementation(libs.compose.uiTooling)
 }
