@@ -3,6 +3,9 @@ package com.jumparoundcreations.toolbox.documentScanner
 import androidx.activity.result.IntentSenderRequest
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.jumparoundcreations.toolbox.documentScanner.useCases.GetScanResultUseCase
+import com.jumparoundcreations.toolbox.documentScanner.useCases.SaveResultOnDeviceUseCase
+import com.jumparoundcreations.toolbox.documentScanner.useCases.ShareScanResultUseCase
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow

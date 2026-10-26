@@ -1,8 +1,8 @@
-package com.jumparoundcreations.toolbox.documentScanner
+package com.jumparoundcreations.toolbox.documentScanner.useCases
 
 import android.content.ContentValues
 import android.net.Uri
-import android.os.Environment.DIRECTORY_DOWNLOADS
+import android.os.Environment
 import android.provider.MediaStore
 import androidx.activity.ComponentActivity
 
@@ -20,7 +20,7 @@ class SaveResultOnDeviceUseCase {
         val contentValues = ContentValues().apply {
             put(MediaStore.MediaColumns.DISPLAY_NAME, fileName)
             put(MediaStore.MediaColumns.MIME_TYPE, "application/pdf")
-            put(MediaStore.MediaColumns.RELATIVE_PATH, DIRECTORY_DOWNLOADS)
+            put(MediaStore.MediaColumns.RELATIVE_PATH, Environment.DIRECTORY_DOWNLOADS)
         }
 
         // Insert the record into MediaStore

@@ -1,4 +1,4 @@
-package com.jumparoundcreations.toolbox.documentScanner
+package com.jumparoundcreations.toolbox.documentScanner.useCases
 
 import android.content.ContentResolver
 import android.content.Intent
