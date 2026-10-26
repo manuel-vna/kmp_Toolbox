@@ -14,7 +14,8 @@ import kotlinx.coroutines.launch
 
 class DocumentScannerViewModel(
     private val getScanResultUseCase: GetScanResultUseCase = GetScanResultUseCase(),
-    private val shareScanResultUseCase: ShareScanResultUseCase = ShareScanResultUseCase()
+    private val shareScanResultUseCase: ShareScanResultUseCase = ShareScanResultUseCase(),
+    private val saveResultOnDeviceUseCase: SaveResultOnDeviceUseCase = SaveResultOnDeviceUseCase()
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(DocumentScannerState())
@@ -64,7 +65,10 @@ class DocumentScannerViewModel(
             }
 
             is DocumentScannerIntent.SaveResultOnDevice -> {
-                // ToDo
+                saveResultOnDeviceUseCase.execute(
+                    intent.activity,
+                    pdfUri = _state.value.scanResult?.pdf?.uri
+                )
             }
 
             is DocumentScannerIntent.ClearAll -> {

@@ -1,5 +1,6 @@
 package com.jumparoundcreations.toolbox.documentScanner
 
+import android.content.ContentResolver
 import android.content.Intent
 import android.net.Uri
 import androidx.activity.ComponentActivity
@@ -13,7 +14,7 @@ class ShareScanResultUseCase {
     ) {
         if (pdfUri == null) return
 
-        val file = if (pdfUri.scheme == "file") {
+        val file = if (pdfUri.scheme == ContentResolver.SCHEME_FILE) {
             File(pdfUri.path ?: return)
         } else {
             File(pdfUri.toString().removePrefix("file://"))

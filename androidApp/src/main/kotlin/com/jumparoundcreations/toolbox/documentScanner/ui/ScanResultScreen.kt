@@ -17,6 +17,7 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.Save
 import androidx.compose.material.icons.filled.Share
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
@@ -127,6 +128,24 @@ fun ColumnScope.ScanResultScreen(
                 modifier = Modifier.padding(end = 8.dp)
             )
             Text("Share")
+        }
+
+        Button(
+            onClick = {
+                if (activity != null) {
+                    viewModel.onIntent(DocumentScannerIntent.SaveResultOnDevice(activity))
+                } else {
+                    println("Saving error")
+                }
+            },
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Icon(
+                Icons.Default.Save,
+                contentDescription = null,
+                modifier = Modifier.padding(end = 8.dp)
+            )
+            Text("Save on device")
         }
 
         if (state.scanResult?.pdf?.uri != null) {
