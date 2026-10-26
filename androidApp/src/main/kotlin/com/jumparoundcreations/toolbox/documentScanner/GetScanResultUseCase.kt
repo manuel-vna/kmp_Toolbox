@@ -4,6 +4,7 @@ import android.content.Intent
 import android.content.IntentSender
 import androidx.activity.ComponentActivity
 import com.google.mlkit.vision.documentscanner.GmsDocumentScannerOptions
+import com.google.mlkit.vision.documentscanner.GmsDocumentScannerOptions.RESULT_FORMAT_JPEG
 import com.google.mlkit.vision.documentscanner.GmsDocumentScannerOptions.RESULT_FORMAT_PDF
 import com.google.mlkit.vision.documentscanner.GmsDocumentScannerOptions.SCANNER_MODE_FULL
 import com.google.mlkit.vision.documentscanner.GmsDocumentScanning
@@ -19,7 +20,7 @@ class GetScanResultUseCase {
             GmsDocumentScannerOptions.Builder()
                 .setGalleryImportAllowed(false)
                 .setPageLimit(5)
-                .setResultFormats(RESULT_FORMAT_PDF)
+                .setResultFormats(RESULT_FORMAT_JPEG, RESULT_FORMAT_PDF)
                 .setScannerMode(SCANNER_MODE_FULL)
                 .build()
 

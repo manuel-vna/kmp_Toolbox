@@ -1,8 +1,6 @@
 package com.jumparoundcreations.toolbox.documentScanner.ui
 
 import android.app.Activity
-import android.graphics.ImageDecoder
-import android.net.Uri
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -23,13 +21,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.ImageBitmap
-import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -95,26 +88,11 @@ fun ScanScreen(
             }
 
             ScanResultScreen(
+                activity,
                 state,
                 viewModel
             )
 
         }
     }
-}
-
-@Composable
-fun rememberBitmapFromUri(uri: Uri): ImageBitmap? {
-    val context = LocalContext.current
-    var bitmap by remember(uri) { mutableStateOf<ImageBitmap?>(null) }
-    LaunchedEffect(uri) {
-        try {
-            val source = ImageDecoder.createSource(context.contentResolver, uri)
-            val decodedBitmap = ImageDecoder.decodeBitmap(source)
-            bitmap = decodedBitmap.asImageBitmap()
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
-    }
-    return bitmap
 }
