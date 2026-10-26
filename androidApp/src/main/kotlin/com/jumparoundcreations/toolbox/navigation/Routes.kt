@@ -12,5 +12,8 @@ sealed interface Routes {
     data object PaceCalculator : Routes
 
     @Serializable
+    data object DocumentScanner : Routes
+
+    @Serializable
     data object Unknown : Routes
 }

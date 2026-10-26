@@ -6,6 +6,7 @@ import androidx.compose.runtime.remember
 import androidx.navigation3.runtime.entryProvider
 import androidx.navigation3.ui.NavDisplay
 import com.jumparoundcreations.toolbox.dashboard.DashboardScreen
+import com.jumparoundcreations.toolbox.documentScanner.ui.ScanScreen
 import com.jumparoundcreations.toolbox.running.RunningScreen
 
 @Composable
@@ -20,11 +21,15 @@ fun Navigation() {
             entryProvider {
                 entry<Routes.Dashboard> {
                     DashboardScreen(
-                        onPaceCalculatorNavigation = { backStack.add(Routes.PaceCalculator) }
+                        onPaceCalculatorNavigation = { backStack.add(Routes.PaceCalculator) },
+                        onDocumentScannerNavigation = { backStack.add(Routes.DocumentScanner) }
                     )
                 }
                 entry<Routes.PaceCalculator> {
                     RunningScreen()
+                }
+                entry<Routes.DocumentScanner> {
+                    ScanScreen()
                 }
             }
     )

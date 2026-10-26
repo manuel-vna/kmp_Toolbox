@@ -13,7 +13,8 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 fun DashboardScreen(
-    onPaceCalculatorNavigation: () -> Unit
+    onPaceCalculatorNavigation: () -> Unit,
+    onDocumentScannerNavigation: () -> Unit
 ) {
     Column(
         modifier = Modifier.fillMaxSize(),
@@ -28,6 +29,14 @@ fun DashboardScreen(
         ) {
             Text("Running Time Calculator")
         }
+        Button(
+            modifier = Modifier,
+            onClick = {
+                onDocumentScannerNavigation()
+            }
+        ) {
+            Text("Document Scanner")
+        }
     }
 }
 
@@ -35,6 +44,7 @@ fun DashboardScreen(
 @Composable
 fun DashboardScreenPreview() {
     DashboardScreen(
-        onPaceCalculatorNavigation = {}
+        onPaceCalculatorNavigation = {},
+        onDocumentScannerNavigation = {}
     )
 }
