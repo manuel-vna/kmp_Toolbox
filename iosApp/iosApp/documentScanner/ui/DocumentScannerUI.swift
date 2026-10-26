@@ -111,7 +111,7 @@ struct DocumentScanner: View {
                     Image(systemName: "doc.text.viewfinder")
                         .font(.system(size: 40))
                         .foregroundStyle(.tertiary)
-                    Text("No pages scanned yet")
+                    Text("No pages scanned at the moment")
                         .font(.subheadline)
                         .foregroundStyle(.secondary)
                 }

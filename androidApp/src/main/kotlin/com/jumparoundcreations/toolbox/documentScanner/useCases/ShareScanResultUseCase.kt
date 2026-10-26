@@ -6,6 +6,8 @@ import android.net.Uri
 import androidx.activity.ComponentActivity
 import androidx.core.content.FileProvider
 import java.io.File
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 class ShareScanResultUseCase {
     fun execute(
@@ -14,16 +16,29 @@ class ShareScanResultUseCase {
     ) {
         if (pdfUri == null) return
 
-        val file = if (pdfUri.scheme == ContentResolver.SCHEME_FILE) {
+        val currentDateTime =
+            LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd_HH-mm-ss"))
+        val fileName = "${currentDateTime}_documentScan.pdf"
+
+        val sourceFile = if (pdfUri.scheme == ContentResolver.SCHEME_FILE) {
             File(pdfUri.path ?: return)
         } else {
             File(pdfUri.toString().removePrefix("file://"))
         }
 
+        val targetFile = File(activity.cacheDir, fileName)
+        try {
+            sourceFile.copyTo(targetFile, overwrite = true)
+        } catch (e: Exception) {
+            // fallback to sourceFile if copy fails
+        }
+
+        val fileToShare = if (targetFile.exists()) targetFile else sourceFile
+
         val contentUri = FileProvider.getUriForFile(
             activity,
             "${activity.packageName}.fileprovider",
-            file
+            fileToShare
         )
 
         val shareIntent = Intent(Intent.ACTION_SEND).apply {

@@ -5,6 +5,8 @@ import android.net.Uri
 import android.os.Environment
 import android.provider.MediaStore
 import androidx.activity.ComponentActivity
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 class SaveResultOnDeviceUseCase {
     fun execute(
@@ -14,7 +16,9 @@ class SaveResultOnDeviceUseCase {
         if (pdfUri == null) return false
 
         val contentResolver = activity.contentResolver
-        val fileName = "Scan_${System.currentTimeMillis()}.pdf"
+        val currentDateTime =
+            LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd_HH-mm-ss"))
+        val fileName = "${currentDateTime}_documentScan.pdf"
 
         // Prepare metadata for the file
         val contentValues = ContentValues().apply {

@@ -148,13 +148,6 @@ fun ColumnScope.ScanResultScreen(
             Text("Save on device")
         }
 
-        if (state.scanResult?.pdf?.uri != null) {
-            Text(
-                text = "File name: ${state.scanResult.pdf?.uri?.lastPathSegment}",
-                style = MaterialTheme.typography.bodySmall,
-                color = MaterialTheme.colorScheme.primary
-            )
-        }
     } else {
         Box(
             modifier = Modifier
@@ -163,7 +156,7 @@ fun ColumnScope.ScanResultScreen(
             contentAlignment = Alignment.Center
         ) {
             Text(
-                text = "No pages scanned yet",
+                text = "No pages scanned at the moment",
                 style = MaterialTheme.typography.bodyLarge,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
