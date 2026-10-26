@@ -111,14 +111,6 @@ fun ColumnScope.ScanResultScreen(
             }
         }
 
-        if (state.scanResult?.pdf?.uri != null) {
-            Text(
-                text = "PDF ready: ${state.scanResult.pdf?.uri?.lastPathSegment}",
-                style = MaterialTheme.typography.bodySmall,
-                color = MaterialTheme.colorScheme.primary
-            )
-        }
-
         Button(
             onClick = {
                 if (activity != null) {
@@ -135,7 +127,14 @@ fun ColumnScope.ScanResultScreen(
                 modifier = Modifier.padding(end = 8.dp)
             )
             Text("Share")
+        }
 
+        if (state.scanResult?.pdf?.uri != null) {
+            Text(
+                text = "File name: ${state.scanResult.pdf?.uri?.lastPathSegment}",
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.primary
+            )
         }
     } else {
         Box(

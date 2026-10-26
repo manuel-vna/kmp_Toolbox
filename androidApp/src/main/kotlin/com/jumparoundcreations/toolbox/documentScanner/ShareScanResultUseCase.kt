@@ -13,21 +13,23 @@ class ShareScanResultUseCase {
     ) {
         if (pdfUri == null) return
 
-        val contentUri = try {
-            FileProvider.getUriForFile(
-                activity,
-                "${activity.packageName}.fileprovider",
-                File(pdfUri.path ?: return)
-            )
-        } catch (e: Exception) {
-            pdfUri
+        val file = if (pdfUri.scheme == "file") {
+            File(pdfUri.path ?: return)
+        } else {
+            File(pdfUri.toString().removePrefix("file://"))
         }
+
+        val contentUri = FileProvider.getUriForFile(
+            activity,
+            "${activity.packageName}.fileprovider",
+            file
+        )
 
         val shareIntent = Intent(Intent.ACTION_SEND).apply {
             type = "application/pdf"
             putExtra(Intent.EXTRA_STREAM, contentUri)
             addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
         }
-        activity.startActivity(Intent.createChooser(shareIntent, "Share Scanned PDF"))
+        activity.startActivity(Intent.createChooser(shareIntent, "Share scanned PDF"))
     }
 }
