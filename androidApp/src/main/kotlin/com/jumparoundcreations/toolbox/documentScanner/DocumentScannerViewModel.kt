@@ -24,6 +24,9 @@ class DocumentScannerViewModel(
     private val _launchScannerEvent = MutableSharedFlow<IntentSenderRequest>()
     val launchScannerEvent: SharedFlow<IntentSenderRequest> = _launchScannerEvent.asSharedFlow()
 
+    private val _effect = MutableSharedFlow<DocumentScannerEffect>()
+    val effect: SharedFlow<DocumentScannerEffect> = _effect.asSharedFlow()
+
     fun onIntent(intent: DocumentScannerIntent) {
         when (intent) {
             is DocumentScannerIntent.StartScanning -> {
@@ -65,10 +68,15 @@ class DocumentScannerViewModel(
             }
 
             is DocumentScannerIntent.SaveResultOnDevice -> {
-                saveResultOnDeviceUseCase.execute(
+                val success = saveResultOnDeviceUseCase.execute(
                     intent.activity,
                     pdfUri = _state.value.scanResult?.pdf?.uri
                 )
+                if (success) {
+                    viewModelScope.launch {
+                        _effect.emit(DocumentScannerEffect.ShowSnackbar("File saved successfully to Downloads!"))
+                    }
+                }
             }
 
             is DocumentScannerIntent.ClearAll -> {

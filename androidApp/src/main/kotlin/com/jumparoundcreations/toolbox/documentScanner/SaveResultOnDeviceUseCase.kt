@@ -10,9 +10,8 @@ class SaveResultOnDeviceUseCase {
     fun execute(
         activity: ComponentActivity,
         pdfUri: Uri?
-    ) {
-
-        if (pdfUri == null) return
+    ): Boolean {
+        if (pdfUri == null) return false
 
         val contentResolver = activity.contentResolver
         val fileName = "Scan_${System.currentTimeMillis()}.pdf"
@@ -31,13 +30,17 @@ class SaveResultOnDeviceUseCase {
         )
 
         // Copy the file content from the ML Kit URI to the Downloads URI
-        destinationUri?.let { dest ->
-            contentResolver.openOutputStream(dest)?.use { outputStream ->
-                contentResolver.openInputStream(pdfUri)?.use { inputStream ->
-                    inputStream.copyTo(outputStream)
+        return destinationUri?.let { dest ->
+            try {
+                contentResolver.openOutputStream(dest)?.use { outputStream ->
+                    contentResolver.openInputStream(pdfUri)?.use { inputStream ->
+                        inputStream.copyTo(outputStream)
+                    }
                 }
+                true
+            } catch (e: Exception) {
+                false
             }
-            println("File saved successfully to Downloads: $fileName")
-        }
+        } ?: false
     }
 }
